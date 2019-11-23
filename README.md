@@ -1,5 +1,8 @@
-#这个版本为测版本 版本号:bishe1-backend
-想法: 用oppenid 作为标识id，session_key来维系与后端的关系。采用静默登陆的方式...
-但是感觉这里面坑有点大。时间紧迫，以后有时间再来尝试这个方法
+#这个版本为测版本 版本号:bishe2-backend
 
-bishe1的小程序api后端
+bishe2的小程序api后端
+
+使用了redis保存用户的session状态
+完成了个人用户的regist、login、logout、mine(个人信息)、头像上传的借口功能
+
+详细信息看swagger文档 http://localhost:8081/swagger-ui.html#/
