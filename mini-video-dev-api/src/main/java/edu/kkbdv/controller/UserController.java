@@ -3,8 +3,12 @@ package edu.kkbdv.controller;
 import edu.kkbdv.common.util.MD5Utils;
 import edu.kkbdv.common.R;
 import edu.kkbdv.pojo.Users;
+import edu.kkbdv.pojo.UsersReport;
+import edu.kkbdv.pojo.Videos;
+import edu.kkbdv.pojo.vo.QueryPublisherVo;
 import edu.kkbdv.pojo.vo.UsersVo;
 import edu.kkbdv.service.UserService;
+import edu.kkbdv.service.VideoSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +29,8 @@ import java.util.UUID;
 public class UserController extends BasicController{
     @Autowired
     private UserService userService;
+    @Autowired
+    private VideoSerivce videoSerivce;
 
     @ApiOperation(value="用户注册接口", notes="返回用户对象")
     @ApiImplicitParam(name = "user", value = "用户对象", required = true, dataType = "Users")
@@ -140,7 +146,7 @@ public class UserController extends BasicController{
     @ApiImplicitParam(name="userId", value="用户id", required=true,
             dataType="String", paramType="query")
     @PostMapping("/query")
-    public R query(String userId){
+    public R query(String userId,String fanId){
         if(StringUtils.isBlank(userId)){
             return R.error("用户id不能为空");
         }
@@ -148,12 +154,12 @@ public class UserController extends BasicController{
         Users user = userService.queryUserInfo(userId);
         UsersVo usersVo = new UsersVo();
         BeanUtils.copyProperties(user,usersVo);//usersVo更统一而且对密码做了处理
+        //check if it has the row about userId and fanId or not
+        usersVo.setFollow(userService.isExitThisFans(userId,fanId));
 
         return R.ok(usersVo);
 
     }
-
-
 
     public  UsersVo setUsersVoToken(Users user){
         String uniqueToken = UUID.randomUUID().toString();
@@ -164,4 +170,33 @@ public class UserController extends BasicController{
         usersVo.setUserToken(uniqueToken);//设置token给返回的data
         return usersVo;
     }
+
+    @PostMapping("/queryPublisher")
+    public R queryPublisher(String loginUserId,String videoId,String publishUserId){
+        QueryPublisherVo queryPublisherVo = new QueryPublisherVo();
+        //查出发布者信息
+        Users user = userService.queryUserInfo(publishUserId);
+        queryPublisherVo.setPublisher(user);
+        //check the user like the video or not
+        queryPublisherVo.setUserLikeVideo(videoSerivce.isUserLikeVideo(loginUserId,videoId));
+        return R.ok(queryPublisherVo);
+    }
+
+    @PostMapping("/beyourfans")
+    public R followMe(String userId,String fanId){
+        userService.addUserFans(userId,fanId);
+        return new R();
+    }
+    @PostMapping("/dontbeyourfans")
+    public R dontFollowMe(String userId,String fanId){
+        userService.reduceUserFans(userId,fanId);
+        return new R();
+    }
+
+    @PostMapping("/reportUser")
+    public R reportUser(@RequestBody UsersReport usersReport){
+        userService.savReport(usersReport);
+        return R.ok("举报成功！");
+    }
+
 }

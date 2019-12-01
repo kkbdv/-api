@@ -1,6 +1,7 @@
 package edu.kkbdv.service;
 
 import edu.kkbdv.pojo.Users;
+import edu.kkbdv.pojo.UsersReport;
 
 public interface UserService {
     /**
@@ -35,4 +36,31 @@ public interface UserService {
      * @return
      */
     public Users queryUserInfo(String userId);
+
+    /**
+     * 增加粉丝数
+     * @param userId
+     * @param fansId
+     */
+    public void addUserFans(String userId,String fansId);
+
+    /**
+     * 减少粉丝数
+     * @param userId
+     * @param fansId
+     */
+    public void reduceUserFans(String userId,String fansId);
+
+    /**
+     * 查看是否有这个id
+     * @param userId
+     * @param fansId
+     * @return
+     */
+    public boolean isExitThisFans(String userId,String fansId);
+
+    /**
+     * 保存举报记录
+     */
+    public void savReport(UsersReport usersReport);
 }

@@ -50,7 +50,7 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-        <table tableName="users" domainObjectName="Users" enableCountByExample="false"
+        <table tableName="comments" domainObjectName="Comments" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
                selectByExampleQueryId="true"/>
 

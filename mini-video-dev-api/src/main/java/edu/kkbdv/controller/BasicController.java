@@ -19,5 +19,11 @@ public class BasicController {
 
     public static final String USER_REDIS_SESSION = "user-redis-session";
 
+    // ffmpeg directory
+    public static final String FFMEG_EXE = "D:\\ffmpeg\\bin\\ffmpeg.exe";
+    // 5 datas per page
+    public static final Integer PAGE_SIZE = 5;
 
+    //the resource path
+    public static final String RESOURCE_PATH = "G:/kkbdv_dev/";
 }

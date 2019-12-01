@@ -7,7 +7,7 @@ public class UsersVo {
 
     private String userToken;
 
-
+    private boolean isFollow;
 
     private String username;
     @JsonIgnore
@@ -98,11 +98,20 @@ public class UsersVo {
         this.userToken = userToken;
     }
 
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
+    }
+
     @Override
     public String toString() {
         return "UsersVo{" +
                 "id='" + id + '\'' +
                 ", userToken='" + userToken + '\'' +
+                ", isFollow=" + isFollow +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", faceImage='" + faceImage + '\'' +

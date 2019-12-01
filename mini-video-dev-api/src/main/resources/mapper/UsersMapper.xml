@@ -78,5 +78,23 @@
     from users
     where username=#{username}
   </select>
+  <select id="addLikeCounts" parameterType="String">
+    update users set receive_like_counts=receive_like_counts+1 where id =#{userId}
+  </select>
 
+  <select id="reduceLikeCounts" parameterType="String">
+    update users set receive_like_counts=receive_like_counts-1 where id =#{userId}
+  </select>
+  <update id="addFansCounts" parameterType="String">
+    update users set fans_counts = fans_counts+1 where id = #{userId}
+  </update>
+  <update id="reduceFansCounts" parameterType="String">
+    update users set fans_counts = fans_counts-1 where id = #{userId}
+  </update>
+  <update id="addFollowCounts" parameterType="String">
+    update users set follow_counts = follow_counts+1 where id=#{fansId}
+  </update>
+  <update id="reduceFollowCounts" parameterType="String">
+    update users set follow_counts = follow_counts-1 where id=#{fansId}
+  </update>
 </mapper>

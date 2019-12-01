@@ -19,4 +19,16 @@ public interface UsersMapper {
     int updateByPrimaryKeySelective(Users record);
 
     Users selectByUserName(@Param("username") String username );
+
+    void addLikeCounts(String userId);
+
+    void reduceLikeCounts(String userId);
+
+    void addFansCounts(String userId);
+
+    void reduceFansCounts(String userId);
+
+    void addFollowCounts(String fansId);
+
+    void reduceFollowCounts(String fansId);
 }
