@@ -24,7 +24,7 @@ public class RedisOperator {
 
 	/**
 	 * 实现命令：TTL key，以秒为单位，返回给定 key的剩余生存时间(TTL, time to live)。
-	 * 
+	 *
 	 * @param key
 	 * @return
 	 */

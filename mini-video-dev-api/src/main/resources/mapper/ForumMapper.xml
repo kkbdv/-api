@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.kkbdv.dao.ForumMapper">
+  <resultMap id="BaseResultMap" type="edu.kkbdv.pojo.Forum">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="forum_title" jdbcType="VARCHAR" property="forumTitle" />
+    <result column="forum_address" jdbcType="VARCHAR" property="forumAddress" />
+    <result column="forum_Desc" jdbcType="VARCHAR" property="forumDesc" />
+    <result column="join_counts" jdbcType="INTEGER" property="joinCounts" />
+    <result column="forum_date" jdbcType="VARCHAR" property="forumDate" />
+    <result column="forum_start" jdbcType="VARCHAR" property="forumStart" />
+    <result column="forum_duration" jdbcType="INTEGER" property="forumDuration" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="forum_coverPath" jdbcType="VARCHAR" property="forumCoverpath" />
+  </resultMap>
+  <resultMap id="ForumVoMap" type="edu.kkbdv.pojo.vo.ForumVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="forum_title" jdbcType="VARCHAR" property="forumTitle" />
+    <result column="forum_address" jdbcType="VARCHAR" property="forumAddress" />
+    <result column="forum_Desc" jdbcType="VARCHAR" property="forumDesc" />
+    <result column="join_counts" jdbcType="INTEGER" property="joinCounts" />
+    <result column="forum_date" jdbcType="VARCHAR" property="forumDate" />
+    <result column="forum_start" jdbcType="VARCHAR" property="forumStart" />
+    <result column="forum_duration" jdbcType="INTEGER" property="forumDuration" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="forum_coverPath" jdbcType="VARCHAR" property="forumCoverpath" />
+  </resultMap>
+  <resultMap id="ForumVoHasUserMap" type="edu.kkbdv.pojo.vo.ForumVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="forum_title" jdbcType="VARCHAR" property="forumTitle" />
+    <result column="forum_address" jdbcType="VARCHAR" property="forumAddress" />
+    <result column="forum_Desc" jdbcType="VARCHAR" property="forumDesc" />
+    <result column="join_counts" jdbcType="INTEGER" property="joinCounts" />
+    <result column="forum_date" jdbcType="VARCHAR" property="forumDate" />
+    <result column="forum_start" jdbcType="VARCHAR" property="forumStart" />
+    <result column="forum_duration" jdbcType="INTEGER" property="forumDuration" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="forum_coverPath" jdbcType="VARCHAR" property="forumCoverpath" />
+    <result column="nickname" property="nickname"></result>
+    <result column="faceImage" property="faceImage"></result>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from forum
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.kkbdv.pojo.Forum">
+    insert into forum (id, forum_title, forum_address, 
+      forum_Desc, forum_date,
+      forum_start, forum_duration,
+      user_id, create_time, forum_coverPath
+      )
+    values (#{id,jdbcType=VARCHAR}, #{forumTitle,jdbcType=VARCHAR}, #{forumAddress,jdbcType=VARCHAR}, 
+      #{forumDesc,jdbcType=VARCHAR}, #{forumDate,jdbcType=VARCHAR},
+      #{forumStart,jdbcType=VARCHAR}, #{forumDuration,jdbcType=INTEGER},
+      #{userId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{forumCoverpath,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="edu.kkbdv.pojo.Forum">
+    update forum
+    set forum_title = #{forumTitle,jdbcType=VARCHAR},
+      forum_address = #{forumAddress,jdbcType=VARCHAR},
+      forum_Desc = #{forumDesc,jdbcType=VARCHAR},
+      join_counts = #{joinCounts,jdbcType=INTEGER},
+      forum_date = #{forumDate,jdbcType=VARCHAR},
+      forum_start = #{forumStart,jdbcType=VARCHAR},
+      forum_duration = #{forumDuration,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      forum_coverPath = #{forumCoverpath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, forum_title, forum_address, forum_Desc, join_counts, forum_date, forum_start, 
+    forum_duration, `status`, user_id, create_time, forum_coverPath
+    from forum
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, forum_title, forum_address, forum_Desc, join_counts, forum_date, forum_start, 
+    forum_duration, `status`, user_id, create_time, forum_coverPath
+    from forum
+  </select>
+  <select id="selectAllForum" resultMap="ForumVoMap">
+    select id, forum_title, forum_address, forum_Desc, join_counts, forum_date, forum_start,
+    forum_duration, `status`, user_id, create_time, forum_coverPath
+    from forum order by create_time desc
+  </select>
+  <select id="selectMyForum" resultMap="ForumVoMap" parameterType="Map">
+    select id, forum_title, forum_address, forum_Desc, join_counts, forum_date, forum_start,
+    forum_duration, `status`, user_id, create_time, forum_coverPath
+    from forum
+    where user_id = #{userId} order by create_time desc
+  </select>
+  <select id="selecForumDetail" resultMap="ForumVoHasUserMap" parameterType="String">
+    select f.* ,u.nickname as nickname ,u.face_image as faceImage
+    from forum f left join users u on f.user_id = u.id
+    where f.id = #{forumId}
+  </select>
+  <update id="addJoinCount" parameterType="String">
+    update forum set join_counts = join_counts+1
+    where id = #{forumId}
+  </update>
+  <update id="redJoinCount" parameterType="String">
+    update forum set join_counts = join_counts-1
+    where id = #{forumId}
+  </update>
+  <select id="selectJoinCount" parameterType="String" resultType="int">
+    select join_counts
+    from forum
+    where id=#{forumId}
+  </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.kkbdv.dao.UsersForumMapper">
+  <resultMap id="BaseResultMap" type="edu.kkbdv.pojo.UsersForum">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="forum_id" jdbcType="VARCHAR" property="forumId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from users_forum
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.kkbdv.pojo.UsersForum">
+    insert into users_forum (id, user_id, forum_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{forumId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="edu.kkbdv.pojo.UsersForum">
+    update users_forum
+    set user_id = #{userId,jdbcType=VARCHAR},
+      forum_id = #{forumId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, user_id, forum_id
+    from users_forum
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, forum_id
+    from users_forum
+  </select>
+  <delete id="deleteByUserIdAndForumId" parameterType="map">
+    delete from users_forum
+    where user_id = #{userId} and forum_id = #{forumId}
+  </delete>
+  <select id="selectByUserIdAndForumId" parameterType="map" resultMap="BaseResultMap">
+    select *
+    from users_forum
+    where user_id = #{userId} and forum_id = #{forumId}
+  </select>
+</mapper>
